@@ -16,19 +16,21 @@ const rest = new REST({ version: '10' }).setToken(process.env.botToken);
 	try {
 		console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
+		rest.put(Routes.applicationCommands(process.env.clientId), { body: [] })
+		.then(() => console.log('Successfully deleted all application commands.'))
+		.catch(console.error);
+		
 		// const data = await rest.put(
 		// 	Routes.applicationGuildCommands(process.env.clientId, process.env.guildId),
 		// 	{ body: commands },
 		// );
 
         const data = await rest.put(
-            Routes.applicationCommands(clientId),
+            Routes.applicationCommands(process.env.clientId),
             { body: commands },
         );
 
-		// rest.put(Routes.applicationCommands(process.env.clientId), { body: [] })
-		// .then(() => console.log('Successfully deleted all application commands.'))
-		// .catch(console.error);
+		
 
 		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
 	} catch (error) {
