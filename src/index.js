@@ -46,7 +46,9 @@ for (const file of commandFiles) {
 }
 
 
-
-client.login(process.env.botToken);
-
-keepAlive();
+try{
+	client.login(process.env.botToken);
+	keepAlive();
+}catch(err){
+	
+}

@@ -19,7 +19,6 @@ module.exports = {
 		}
 
 		try {
-			console.log("HELLo")
 			await command.execute(interaction);
 		} catch (error) {
 			console.error(`Error executing ${interaction.commandName}`);

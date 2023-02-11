@@ -21,9 +21,13 @@ module.exports = {
         let data = await fetch(uri)
         .then((res) => res.json())
         .then((data) => {
-            console.log(data)
+            // console.log(data)
             return data.data
         })
+
+        if(!data){
+            return await interaction.reply({ content: "Cannot find your Valorant!" });
+        }
 
         const embed = new EmbedBuilder()
         .setColor('Gold')
@@ -31,13 +35,17 @@ module.exports = {
         // .setDescription('Some description here')
         .setThumbnail(`${data.images.small}`)
         .addFields(
-            { name: 'Current :', value: `${data.currenttierpatched}`, inline: false },
-            { name: 'MMR :', value: `${data.currenttier}`, inline: false },
-            { name: 'Last Game :', value: `${data.mmr_change_to_last_game}`, inline: false },
-            // { name: '\u200B', value: '\u200B' },
+            { name: 'Currented', value: `${data.currenttierpatched}`, inline: true },
+            { name: 'Elo', value: `${data.elo}`, inline: true },
+            { name: '\u200B', value: '\u200B', inline: true  },
+            { name: 'Ranked Rating', value: `${data.ranking_in_tier}`, inline: true },
+            { name: 'Last Game', value: `${data.mmr_change_to_last_game}`, inline: true },
+            { name: '\u200B', value: '\u200B', inline: true  },
             )
         .setTimestamp()
 
-		await interaction.reply({ embeds: [embed] });
-	},
+		await interaction.deferReply({ephemeral: true});
+        await interaction.editReply({ embeds: [embed] , ephemeral: true});
+        
+    },
 };
